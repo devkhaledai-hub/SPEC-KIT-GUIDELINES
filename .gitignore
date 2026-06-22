@@ -1,0 +1,10 @@
+bin/
+obj/
+*.user
+*.suo
+packages/
+.env
+.env.*
+!.env.example
+.DS_Store
+coverage/

@@ -12,11 +12,11 @@
 
 **Purpose**: Create the .NET 9 API, test project, reproducible local container stack, and safe configuration surface.
 
-- [ ] T001 Create the .NET 9 solution and API project in `TaskManagement.sln` and `src/TaskManagement.Api/TaskManagement.Api.csproj`
-- [ ] T002 [P] Create the xUnit integration, contract, and unit test project in `tests/TaskManagement.Api.Tests/TaskManagement.Api.Tests.csproj`
-- [ ] T003 [P] Add ASP.NET Core, JWT bearer, EF Core 9, Npgsql, OpenAPI, xUnit, WebApplicationFactory, and PostgreSQL test dependencies in `src/TaskManagement.Api/TaskManagement.Api.csproj` and `tests/TaskManagement.Api.Tests/TaskManagement.Api.Tests.csproj`
-- [ ] T004 [P] Define variable names only and ignore local secrets in `.env.example`, `.gitignore`, and `src/TaskManagement.Api/appsettings.json`
-- [ ] T005 [P] Add the multi-stage API image and PostgreSQL 16 local development services with health checks in `Dockerfile` and `docker-compose.yml`
+- [X] T001 Create the .NET 9 solution and API project in `TaskManagement.sln` and `src/TaskManagement.Api/TaskManagement.Api.csproj`
+- [X] T002 [P] Create the xUnit integration, contract, and unit test project in `tests/TaskManagement.Api.Tests/TaskManagement.Api.Tests.csproj`
+- [X] T003 [P] Add ASP.NET Core, JWT bearer, EF Core 9, Npgsql, OpenAPI, xUnit, WebApplicationFactory, and PostgreSQL test dependencies in `src/TaskManagement.Api/TaskManagement.Api.csproj` and `tests/TaskManagement.Api.Tests/TaskManagement.Api.Tests.csproj`
+- [X] T004 [P] Define variable names only and ignore local secrets in `.env.example`, `.gitignore`, and `src/TaskManagement.Api/appsettings.json`
+- [X] T005 [P] Add the multi-stage API image and PostgreSQL 16 local development services with health checks in `Dockerfile` and `docker-compose.yml`
 
 ---
 
@@ -26,15 +26,15 @@
 
 **⚠️ CRITICAL**: Complete this phase before beginning user-story endpoint work.
 
-- [ ] T006 Create the `TaskStatus` enum and `TaskItem` aggregate with timestamps and optimistic version fields in `src/TaskManagement.Api/Domain/TaskStatus.cs` and `src/TaskManagement.Api/Domain/TaskItem.cs`
-- [ ] T007 Create the EF Core DbContext and task mapping with team/status/assignee indexes in `src/TaskManagement.Api/Data/TaskManagementDbContext.cs` and `src/TaskManagement.Api/Data/Configurations/TaskItemConfiguration.cs`
+- [X] T006 Create the `TaskStatus` enum and `TaskItem` aggregate with timestamps and optimistic version fields in `src/TaskManagement.Api/Domain/TaskStatus.cs` and `src/TaskManagement.Api/Domain/TaskItem.cs`
+- [X] T007 Create the EF Core DbContext and task mapping with team/status/assignee indexes in `src/TaskManagement.Api/Data/TaskManagementDbContext.cs` and `src/TaskManagement.Api/Data/Configurations/TaskItemConfiguration.cs`
 - [ ] T008 Create and verify the initial task schema migration in `src/TaskManagement.Api/Data/Migrations/*_CreateTasks.cs`
-- [ ] T009 [P] Define the shared API error DTO, error codes, and safe problem-details factory in `src/TaskManagement.Api/Contracts/ErrorResponse.cs` and `src/TaskManagement.Api/Endpoints/ApiErrorResults.cs`
-- [ ] T010 Implement centralized validation, exception, and EF concurrency-to-error middleware in `src/TaskManagement.Api/Endpoints/ExceptionHandlingMiddleware.cs`
+- [X] T009 [P] Define the shared API error DTO, error codes, and safe problem-details factory in `src/TaskManagement.Api/Contracts/ErrorResponse.cs` and `src/TaskManagement.Api/Endpoints/ApiErrorResults.cs`
+- [X] T010 Implement centralized validation, exception, and EF concurrency-to-error middleware in `src/TaskManagement.Api/Endpoints/ExceptionHandlingMiddleware.cs`
 - [ ] T011 [P] Implement the current principal abstraction that reads opaque subject, team, and administrator claims in `src/TaskManagement.Api/Authorization/CurrentTeamPrincipal.cs`
-- [ ] T012 Configure JWT bearer authentication to validate signature, issuer, audience, and expiry from environment-backed configuration in `src/TaskManagement.Api/Program.cs`
+- [X] T012 Configure JWT bearer authentication to validate signature, issuer, audience, and expiry from environment-backed configuration in `src/TaskManagement.Api/Program.cs`
 - [ ] T013 Implement reusable team-member, creator-or-admin, and creator-assignee-or-admin authorization handlers in `src/TaskManagement.Api/Authorization/TaskAuthorizationHandlers.cs`
-- [ ] T014 Configure endpoint routing, global bearer authorization, OpenAPI bearer security, DbContext registration, and anonymous health routing in `src/TaskManagement.Api/Program.cs`
+- [X] T014 Configure endpoint routing, global bearer authorization, OpenAPI bearer security, DbContext registration, and anonymous health routing in `src/TaskManagement.Api/Program.cs`
 - [ ] T015 [P] Create a test host with a test-only authentication handler and PostgreSQL-backed database fixture without committed tokens or signing keys in `tests/TaskManagement.Api.Tests/Integration/TaskManagementWebApplicationFactory.cs` and `tests/TaskManagement.Api.Tests/Integration/PostgresFixture.cs`
 - [ ] T016 [P] Add health contract tests for anonymous `GET /health` success and PostgreSQL-unavailable `503` behavior in `tests/TaskManagement.Api.Tests/Integration/HealthEndpointTests.cs`
 - [ ] T017 Verify the foundation's error envelope, invalid/missing bearer-token `401`, and forbidden `403` contract behavior in `tests/TaskManagement.Api.Tests/Contract/FoundationContractTests.cs`
@@ -58,10 +58,10 @@
 
 ### Implementation for User Story 1
 
-- [ ] T022 [P] [US1] Create task command and response DTOs matching the documented contract in `src/TaskManagement.Api/Contracts/Tasks/CreateTaskRequest.cs`, `src/TaskManagement.Api/Contracts/Tasks/UpdateTaskRequest.cs`, and `src/TaskManagement.Api/Contracts/Tasks/TaskResponse.cs`
-- [ ] T023 [P] [US1] Implement same-team assignee validation and task create/detail-update/status business rules in `src/TaskManagement.Api/Domain/TaskCommandService.cs`
+- [X] T022 [P] [US1] Create task command and response DTOs matching the documented contract in `src/TaskManagement.Api/Contracts/Tasks/CreateTaskRequest.cs`, `src/TaskManagement.Api/Contracts/Tasks/UpdateTaskRequest.cs`, and `src/TaskManagement.Api/Contracts/Tasks/TaskResponse.cs`
+- [X] T023 [P] [US1] Implement same-team assignee validation and task create/detail-update/status business rules in `src/TaskManagement.Api/Domain/TaskCommandService.cs`
 - [ ] T024 [US1] Implement atomic version-checked task updates and conflict mapping in `src/TaskManagement.Api/Data/TaskRepository.cs`
-- [ ] T025 [US1] Map create, get-detail, detail-update, and status-update endpoints with their documented response codes in `src/TaskManagement.Api/Endpoints/TaskCommandEndpoints.cs`
+- [X] T025 [US1] Map create, get-detail, detail-update, and status-update endpoints with their documented response codes in `src/TaskManagement.Api/Endpoints/TaskCommandEndpoints.cs`
 - [ ] T026 [US1] Run the User Story 1 contract and integration suites and correct deviations in `tests/TaskManagement.Api.Tests/Contract/TaskCommandsContractTests.cs` and `tests/TaskManagement.Api.Tests/Integration/TaskLifecycleTests.cs`
 
 **Checkpoint**: User Story 1 is independently usable and validates FR-001 through FR-006, including concurrency behavior.
