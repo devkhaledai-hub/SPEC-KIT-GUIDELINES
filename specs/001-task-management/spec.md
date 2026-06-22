@@ -8,6 +8,13 @@
 
 **Input**: User description: "Build a task management module."
 
+## Clarifications
+
+### Session 2026-06-22
+
+- Q: Who may edit a task's title, description, due date, and assignee after it is created? → A: Creators and administrators edit task details; assignees change status only.
+- Q: What happens to a task and its comments when an authorized user deletes it? → A: Permanently remove the task and all of its comments.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Create and organize a task (Priority: P1)
@@ -24,6 +31,7 @@ A team member creates a task with the work to be done, its deadline, and the tea
 2. **Given** a task assigned to a team member, **When** that assignee changes its status to In Progress, In Review, or Done, **Then** the task displays the newly selected status.
 3. **Given** a task with no due date, **When** its creator saves it without a due date, **Then** the task is created and clearly shows that no deadline is set.
 4. **Given** a task creation form, **When** the member omits the title or chooses an assignee who is not in the team, **Then** the task is not created and the member receives a clear explanation of the invalid field.
+5. **Given** an existing task, **When** its creator or an administrator updates its title, description, due date, or assignee, **Then** the task displays the revised details.
 
 ---
 
@@ -69,8 +77,8 @@ A task creator removes their own task, while an administrator can remove any tas
 
 **Acceptance Scenarios**:
 
-1. **Given** a task created by the current team member, **When** the creator confirms deletion, **Then** the task and its comments are removed from the module.
-2. **Given** a task created by another member, **When** an administrator confirms deletion, **Then** the task and its comments are removed from the module.
+1. **Given** a task created by the current team member, **When** the creator confirms deletion, **Then** the task and its comments are permanently removed from the module.
+2. **Given** a task created by another member, **When** an administrator confirms deletion, **Then** the task and its comments are permanently removed from the module.
 3. **Given** a task created by another member and a non-administrator, **When** that member attempts to delete the task, **Then** the task remains unchanged and the member is told they lack permission.
 
 ### Edge Cases
@@ -79,7 +87,7 @@ A task creator removes their own task, while an administrator can remove any tas
 - A due date in the past is retained as a valid overdue deadline and is visually distinguishable from a future deadline.
 - If an assignee is no longer a member of the team, existing tasks keep their recorded assignee identity but cannot be newly assigned to that person.
 - If two authorized members update the same task's status at nearly the same time, the module preserves one valid status and informs the member whose change could not be saved to refresh before retrying.
-- A deleted task is excluded from all task lists, filters, and comment views.
+- A deleted task and its comments are permanently removed and excluded from all task lists, filters, and comment views.
 
 ### Cross-Cutting Requirements
 
@@ -95,15 +103,16 @@ A task creator removes their own task, while an administrator can remove any tas
 - **FR-001**: The system MUST allow authenticated team members to create a task with a non-empty title, an optional description, an optional due date, and an assignee who is currently a member of the same team.
 - **FR-002**: The system MUST create every new task with the Backlog status and record its creator, creation time, title, description, due date, assignee, and current status.
 - **FR-003**: The system MUST support exactly these task statuses: Backlog, In Progress, In Review, and Done.
-- **FR-004**: The system MUST allow a task's creator or current assignee to change that task's status to any supported status; an assignee must be able to update the status of every task assigned to them.
-- **FR-005**: The system MUST prevent a team member who is neither a task's creator nor its current assignee from changing that task's status, unless the member has existing administrator access.
-- **FR-006**: The system MUST allow every authenticated member of the task's team to add a non-empty comment to the task and record the comment's author and posting time.
-- **FR-007**: The system MUST allow a task creator to delete their own task and an administrator to delete any task in their team.
-- **FR-008**: The system MUST prevent all other team members from deleting a task and leave the task and its comments unchanged when deletion is denied.
-- **FR-009**: The system MUST allow team members to filter visible tasks by one status, one assignee, or both; combined filters must use matching criteria for both selections.
-- **FR-010**: The system MUST show a clear empty-state result when no tasks match the selected filters.
-- **FR-011**: The system MUST show a clear validation or permission message when a requested create, comment, status-update, filter, or deletion action cannot be completed.
-- **FR-012**: The system MUST not create, schedule, or otherwise support recurring tasks in this phase.
+- **FR-004**: The system MUST allow a task's creator or an administrator to update its title, description, due date, and assignee, provided the assignee is currently a member of the same team.
+- **FR-005**: The system MUST allow a task's creator or current assignee to change that task's status to any supported status; an assignee must be able to update the status of every task assigned to them.
+- **FR-006**: The system MUST prevent a team member who is neither a task's creator nor its current assignee from changing that task's status, unless the member has existing administrator access.
+- **FR-007**: The system MUST allow every authenticated member of the task's team to add a non-empty comment to the task and record the comment's author and posting time.
+- **FR-008**: The system MUST allow a task creator to permanently delete their own task and its comments and an administrator to permanently delete any task and its comments in their team.
+- **FR-009**: The system MUST prevent all other team members from deleting a task and leave the task and its comments unchanged when deletion is denied.
+- **FR-010**: The system MUST allow team members to filter visible tasks by one status, one assignee, or both; combined filters must use matching criteria for both selections.
+- **FR-011**: The system MUST show a clear empty-state result when no tasks match the selected filters.
+- **FR-012**: The system MUST show a clear validation or permission message when a requested create, edit, comment, status-update, filter, or deletion action cannot be completed.
+- **FR-013**: The system MUST not create, schedule, or otherwise support recurring tasks in this phase.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -128,5 +137,5 @@ A task creator removes their own task, while an administrator can remove any tas
 - Tasks belong to a single team, and task visibility is limited to members of that team.
 - A task has one assignee at a time; assigning multiple people to one task is outside this phase.
 - Task titles are required; descriptions and due dates are optional.
-- Task creators and current assignees may change status. Administrators retain their existing elevated authority for status changes; no other member may do so.
-- Deleting a task also removes its comments; restoring deleted tasks, audit-history views, attachments, subtasks, notifications, and recurring tasks are outside this phase.
+- Task creators and administrators may edit task details. Task creators and current assignees may change status; administrators retain their existing elevated authority for status changes.
+- Deleting a task permanently removes its comments; restoration, audit-history views, attachments, subtasks, notifications, and recurring tasks are outside this phase.
